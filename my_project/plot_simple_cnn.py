@@ -42,7 +42,7 @@ def plot_simple_cnn():
         to_Conv("uconv6", 128, 4, offset="(2,0,0)", to="(uconv4-east)", height=56, depth=56, width=2, caption="Uconv6"),
 
         # Output
-        to_output("output", 4, "(2,0,0)", "(uconv6-east)", caption="Output"),
+        to_Conv("output", 128, 4, offset="(2,0,0)", to="(uconv6-east)", height=56, depth=56, width=2, caption="Output"),
 
         to_end()
     ]
