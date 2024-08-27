@@ -10,7 +10,7 @@ def plot_simple_cnn():
         to_begin(),
 
         # Input
-        to_input('./input.png', to='(0,0,0)', width=8, height=8, name="input"),
+        to_input('input.jpg', to='(0,0,0)', width=8, height=8, name="input"),
         to_ConvConvRelu(name='ccr_b1', s_filer=64, n_filer=(64,64), offset="(0,0,0)", to="(0,0,0)", width=(2,2), height=40, depth=40, caption="Convolutional Layers"),
         to_Pool(name="pool_b1", offset="(0,0,0)", to="(ccr_b1-east)", width=1, height=32, depth=32, opacity=0.5, caption="Max Pooling"),
 
