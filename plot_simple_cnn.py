@@ -21,8 +21,8 @@ def plot_simple_cnn():
         to_Pool("pool3", offset="(0,0,0)", to="(conv3-east)"),
         
         # Fully Connected Layers
-        to_FC('fc1', 512, offset="(2,0,0)", to="(pool3-east)", height=3, depth=25, width=1),
-        to_FC('fc2', 4096, offset="(2,0,0)", to="(fc1-east)", height=3, depth=25, width=1),
+        to_ConvSoftMax("fc1", s_filer=512, offset="(2,0,0)", to="(pool3-east)", width=1, height=25, depth=25, caption="FC 512"),
+        to_ConvSoftMax("fc2", s_filer=4096, offset="(2,0,0)", to="(fc1-east)", width=1, height=25, depth=25, caption="FC 4096"),
 
         # Decoder
         to_UnPool("unpool1", offset="(1,0,0)", to="(fc2-east)"),
