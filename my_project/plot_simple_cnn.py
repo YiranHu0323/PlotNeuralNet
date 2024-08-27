@@ -10,7 +10,7 @@ def plot_simple_cnn():
         to_begin(),
 
         # Input
-        to_input('input.jpg', width=14, height=14),
+        to_input('input.jpg', width=13, height=13),
         
         # Encoder
         to_Conv("conv1", 224, 64, offset="(0,0,0)", to="(0,0,0)", height=64, depth=64, width=2, caption="Conv1 + BN"),
