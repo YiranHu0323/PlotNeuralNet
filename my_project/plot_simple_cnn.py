@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/root/PlotNeuralNet')
+sys.path.append('../')
 from pycore.tikzeng import *
 from pycore.blocks import *
 
