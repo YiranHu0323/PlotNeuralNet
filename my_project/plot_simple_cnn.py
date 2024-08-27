@@ -27,7 +27,7 @@ def plot_simple_cnn():
         to_SoftMax("fc2", 4096, offset="(2,0,0)", to="(fc1-east)", width=1, height=1, depth=40, caption="FC2"),
 
         # Reshape
-        to_SoftMax("reshape", 64, offset="(2,0,0)", to="(fc2-east)", width=8, height=8, depth=8, caption="Reshape (64x8x8)"),
+        to_SoftMax("reshape", 64, 8, offset="(2,0,0)", to="(fc2-east)", width=1, height=8, depth=8, caption="Reshape"),
 
         # Decoder
         to_UnPool("unpool1", offset="(2,0,0)", to="(reshape-east)", width=1, height=16, depth=16, opacity=0.5),
