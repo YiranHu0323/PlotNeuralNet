@@ -10,10 +10,10 @@ def plot_simple_cnn():
         to_begin(),
 
         # Input
-        to_input('input.jpg', to='(0,0,0)', width=8, height=8, name="input"),
+        to_input('input.jpg'),
         
         # Encoder
-        to_ConvConvRelu(name='ccr_b1', s_filer=64, n_filer=(64,64), offset="(3,0,0)", to="(input-east)", width=(2,2), height=40, depth=40, caption="Conv 64"),
+        to_ConvConvRelu(name='ccr_b1', s_filer=64, n_filer=(64,64), offset="(0,0,0)", to="(0,0,0)", width=(2,2), height=40, depth=40, caption="Conv 64"),
         to_Pool(name="pool_b1", offset="(0,0,0)", to="(ccr_b1-east)", width=1, height=32, depth=32, opacity=0.5, caption="Max Pool"),
         
         to_Conv("conv2", 112, 128, offset="(2,0,0)", to="(pool_b1-east)", height=32, depth=32, width=2, caption="Conv 128"),
