@@ -23,8 +23,8 @@ def plot_simple_cnn():
         to_Pool("pool3", offset="(0,0,0)", to="(conv3-east)", height=8, depth=8, width=1, opacity=0.5, caption="MaxPool"),
         
         # Fully Connected Layers
-        to_FullyConnected("fc1", 512, offset="(2,0,0)", to="(pool3-east)", width=1, height=40, depth=40, caption="FC1"),
-        to_FullyConnected("fc2", 4096, offset="(2,0,0)", to="(fc1-east)", width=1, height=40, depth=40, caption="FC2"),
+        to_SoftMax("fc1", 512, offset="(2,0,0)", to="(pool3-east)", width=1, height=40, depth=40, caption="FC1"),
+        to_SoftMax("fc2", 4096, offset="(2,0,0)", to="(fc1-east)", width=1, height=40, depth=40, caption="FC2"),
 
         # Decoder
         to_UnPool("unpool1", offset="(2,0,0)", to="(fc2-east)", width=1, height=16, depth=16, opacity=0.5, caption="Upsample"),
