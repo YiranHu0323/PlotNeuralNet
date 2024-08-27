@@ -10,7 +10,7 @@ def plot_simple_cnn():
         to_begin(),
 
         # Input
-        to_input('input.jpg'),
+        to_input('input.jpg', width=64, height=64, caption='224x224x3'),
         
         # Encoder
         to_Conv("conv1", 224, 64, offset="(0,0,0)", to="(0,0,0)", height=64, depth=64, width=2, caption="Conv1 + BN"),
@@ -23,11 +23,14 @@ def plot_simple_cnn():
         to_Pool("pool3", offset="(0,0,0)", to="(conv3-east)", height=8, depth=8, width=1, opacity=0.5, caption="MaxPool"),
         
         # Fully Connected Layers
-        to_SoftMax("fc1", 512, offset="(2,0,0)", to="(pool3-east)", width=1, height=40, depth=1, caption="FC1"),
-        to_SoftMax("fc2", 4096, offset="(2,0,0)", to="(fc1-east)", width=1, height=40, depth=1, caption="FC2"),
+        to_SoftMax("fc1", 512, offset="(2,0,0)", to="(pool3-east)", width=1, height=1, depth=40, caption="FC1"),
+        to_SoftMax("fc2", 4096, offset="(2,0,0)", to="(fc1-east)", width=1, height=1, depth=40, caption="FC2"),
+
+        # Reshape
+        to_SoftMax("reshape", 64, offset="(2,0,0)", to="(fc2-east)", width=8, height=8, depth=8, caption="Reshape (64x8x8)"),
 
         # Decoder
-        to_UnPool("unpool1", offset="(2,0,0)", to="(fc2-east)", width=1, height=16, depth=16, opacity=0.5),
+        to_UnPool("unpool1", offset="(2,0,0)", to="(reshape-east)", width=1, height=16, depth=16, opacity=0.5),
         to_Conv("uconv1", 16, 32, offset="(0,0,0)", to="(unpool1-east)", height=16, depth=16, width=2, caption="Upsample + Uconv1"),
         
         to_UnPool("unpool2", offset="(2,0,0)", to="(uconv1-east)", width=1, height=32, depth=32, opacity=0.5),
