@@ -13,33 +13,34 @@ def plot_simple_cnn():
         to_input('input.jpg'),
         
         # Encoder
-        to_ConvConvRelu(name='ccr_b1', s_filer=64, n_filer=(64,64), offset="(0,0,0)", to="(0,0,0)", width=(2,2), height=40, depth=40, caption="Conv 64"),
-        to_Pool(name="pool_b1", offset="(0,0,0)", to="(ccr_b1-east)", width=1, height=32, depth=32, opacity=0.5, caption="Max Pool"),
+        to_Conv("conv1", 224, 64, offset="(0,0,0)", to="(0,0,0)", height=64, depth=64, width=2, caption="Conv1"),
+        to_BatchNorm("bn1", 64, offset="(0,0,0)", to="(conv1-east)", height=24, depth=24, width=1, caption="BN"),
+        to_Pool("pool", offset="(0,0,0)", to="(bn1-east)", height=32, depth=32, width=1, opacity=0.5, caption="MaxPool"),
         
-        to_Conv("conv2", 112, 128, offset="(2,0,0)", to="(pool_b1-east)", height=32, depth=32, width=2, caption="Conv 128"),
-        to_Pool("pool2", offset="(0,0,0)", to="(conv2-east)", height=28, depth=28, width=1, opacity=0.5, caption="Max Pool"),
+        to_Conv("conv2", 112, 128, offset="(2,0,0)", to="(pool-east)", height=32, depth=32, width=2, caption="Conv2"),
+        to_BatchNorm("bn2", 128, offset="(0,0,0)", to="(conv2-east)", height=24, depth=24, width=1, caption="BN"),
         
-        to_Conv("conv3", 56, 128, offset="(2,0,0)", to="(pool2-east)", height=25, depth=25, width=2, caption="Conv 128"),
-        to_Pool("pool3", offset="(0,0,0)", to="(conv3-east)", height=21, depth=21, width=1, opacity=0.5, caption="Max Pool"),
+        to_Conv("conv3", 112, 128, offset="(2,0,0)", to="(bn2-east)", height=32, depth=32, width=2, caption="Conv3"),
+        to_BatchNorm("bn3", 128, offset="(0,0,0)", to="(conv3-east)", height=24, depth=24, width=1, caption="BN"),
         
         # Fully Connected Layers
-        to_ConvSoftMax("fc1", s_filer=512, offset="(2,0,0)", to="(pool3-east)", width=1, height=25, depth=25, caption="FC 512"),
-        to_ConvSoftMax("fc2", s_filer=4096, offset="(2,0,0)", to="(fc1-east)", width=1, height=25, depth=25, caption="FC 4096"),
+        to_ConvSoftMax("fc1", s_filer=512, offset="(2,0,0)", to="(bn3-east)", width=1, height=40, depth=40, caption="FC1"),
+        to_ConvSoftMax("fc2", s_filer=4096, offset="(2,0,0)", to="(fc1-east)", width=1, height=40, depth=40, caption="FC2"),
 
         # Decoder
-        to_UnPool("unpool1", offset="(2,0,0)", to="(fc2-east)", width=1, height=25, depth=25, opacity=0.5, caption="Upsample"),
-        to_Conv("uconv1", 16, 32, offset="(0,0,0)", to="(unpool1-east)", height=25, depth=25, width=2, caption="Conv 32"),
+        to_UnPool("unpool1", offset="(2,0,0)", to="(fc2-east)", width=1, height=32, depth=32, opacity=0.5, caption="Upsample"),
+        to_Conv("uconv1", 32, 32, offset="(0,0,0)", to="(unpool1-east)", height=32, depth=32, width=2, caption="Conv"),
         
-        to_UnPool("unpool2", offset="(2,0,0)", to="(uconv1-east)", width=1, height=32, depth=32, opacity=0.5, caption="Upsample"),
-        to_Conv("uconv2", 32, 64, offset="(0,0,0)", to="(unpool2-east)", height=32, depth=32, width=2, caption="Conv 64"),
+        to_UnPool("unpool2", offset="(2,0,0)", to="(uconv1-east)", width=1, height=40, depth=40, opacity=0.5, caption="Upsample"),
+        to_Conv("uconv2", 64, 64, offset="(0,0,0)", to="(unpool2-east)", height=40, depth=40, width=2, caption="Conv"),
         
-        to_UnPool("unpool3", offset="(2,0,0)", to="(uconv2-east)", width=1, height=40, depth=40, opacity=0.5, caption="Upsample"),
-        to_Conv("uconv3", 64, 128, offset="(0,0,0)", to="(unpool3-east)", height=40, depth=40, width=2, caption="Conv 128"),
+        to_UnPool("unpool3", offset="(2,0,0)", to="(uconv2-east)", width=1, height=48, depth=48, opacity=0.5, caption="Upsample"),
+        to_Conv("uconv3", 128, 128, offset="(0,0,0)", to="(unpool3-east)", height=48, depth=48, width=2, caption="Conv"),
         
-        to_UnPool("unpool4", offset="(2,0,0)", to="(uconv3-east)", width=1, height=64, depth=64, opacity=0.5, caption="Upsample"),
-        to_Conv("uconv4", 128, 128, offset="(0,0,0)", to="(unpool4-east)", height=64, depth=64, width=2, caption="Conv 128"),
+        to_UnPool("unpool4", offset="(2,0,0)", to="(uconv3-east)", width=1, height=56, depth=56, opacity=0.5, caption="Upsample"),
+        to_Conv("uconv4", 256, 128, offset="(0,0,0)", to="(unpool4-east)", height=56, depth=56, width=2, caption="Conv"),
         
-        to_Conv("uconv6", 128, 4, offset="(2,0,0)", to="(uconv4-east)", height=64, depth=64, width=2, caption="Conv 4"),
+        to_Conv("uconv6", 256, 4, offset="(2,0,0)", to="(uconv4-east)", height=56, depth=56, width=2, caption="Conv"),
 
         # Output
         to_ConvSoftMax("output", 4, "(2,0,0)", "(uconv6-east)", caption="Output"),
