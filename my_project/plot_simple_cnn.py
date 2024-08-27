@@ -41,7 +41,7 @@ def plot_simple_cnn():
         to_end()
     ]
 
-    namefile = 'SimpleCNN_architecture'
+    namefile = str(sys.argv[0]).split('.')[0]
     to_generate(arch, namefile + '.tex')
 
 if __name__ == '__main__':
